@@ -2,7 +2,6 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
 
-
 This project shows a filter to select different origins, destinations and a unique month to travel . the best offer API will receive the request to return 10 best offers that match with the information selected.
 
 one or several origins can be selected.
@@ -21,6 +20,10 @@ the main components in this project are.
 
 
 ## Development server
+clone the repository with the command `git clone https://github.com/yhormanp/viajalaFilter.git`.
+
+run the command `npm install` to download the necessary packages.
+
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
