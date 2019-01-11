@@ -1,0 +1,73 @@
+.filterFormat {
+  width: 450px;
+  height: 42px;
+  background-color: #007bff;
+  position: relative;
+}
+
+.filterOption {
+  width: 110px;
+  background-color: #007bff;
+  text-align: center;
+  height: 42px;
+  padding-top: 7px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.filterOption:hover {
+  cursor: pointer;
+  background-color: #426a96;
+}
+
+.iconFormat {
+  margin-left: 10px;
+  margin-top: 7px;
+  color: #fff;
+}
+
+.options {
+  background-color: #fff;
+  border-bottom-color: grey;
+  border: 1px solid;
+  padding-left: 15px;
+  z-index: 12;
+  position: absolute;
+  width: 100%;
+}
+
+.slideToggle {
+  color: #007bff;
+}
+
+.error {
+  color: red;
+  font-size: 16px;
+}
+.resultsDiv {
+  position: relative;
+}
+
+.loadingFormat {
+  background-color: #007bff;
+  width: 180px;
+  height: 50px;
+  text-align: center;
+  margin-left: 30%;
+  margin-top: 30%;
+  z-index: 11;
+  border-radius: 5px;
+  padding: 12px;
+  position: relative;
+  color: #fff;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 450px;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+}

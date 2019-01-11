@@ -1,0 +1,27 @@
+.row{
+    margin : 0px;
+    height: 45px;
+    border: 1px solid #ccc
+}
+
+
+.btnFormat{
+    border-radius: 3px;
+    border: none;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    /* margin: 4px 0; */
+    padding: 5px;
+    text-decoration: none;
+    background-color: #f59173;
+    width: 130px;
+    margin-top: 5px;
+    color: #212529;
+    text-align: center;
+}
+
+
+.center{
+    padding: 7px;
+}
