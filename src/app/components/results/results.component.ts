@@ -13,16 +13,11 @@ export class ResultsComponent implements OnInit {
   ngOnInit() {}
 
   convertUnixStamp(timeStamp: string) {
-    const date = new Date(Number(timeStamp));
-    // Year
-    const year = date.getFullYear();
-    // Month
-    const month = date.getMonth() + 1;
-    // Day
-    const day = date.getDate();
-    // Display date time in dd-MM-yyyy format
-    const convdataTime = day + '/' + month;
-    return convdataTime;
+    const date = new Date(Number(timeStamp)),
+          year = date.getFullYear(),
+          month = date.getMonth() + 1,
+          day = date.getDate();
+    return  `${day}/${month}`;
   }
 
   createDeepLink(UrlDeepLink) {

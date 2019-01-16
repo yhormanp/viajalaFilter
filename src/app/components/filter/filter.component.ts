@@ -139,7 +139,7 @@ export class FilterComponent implements OnInit {
             year = date.getFullYear(),
             month = this.selectedMonth,
             day = date.getDate();
-      monthProccessed = year + '-' + month + '-' + day;
+      monthProccessed = `${year}-${month}-${day}`;
     }
 
     this.bOService
