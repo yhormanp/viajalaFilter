@@ -107,7 +107,7 @@ export class FilterComponent implements OnInit {
     }, 1800);
   }
 
-  isSelected(shortName: string, filterBy: string) {
+  optionSelected(shortName: string, filterBy: string) {
     let existElement = false;
 
     if (filterBy === 'origin') {

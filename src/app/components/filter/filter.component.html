@@ -43,7 +43,7 @@
     </div>
     <div class="row" *ngFor="let data of originContent">
       <div class="col-md-8 col-sm-8 col-8">
-        <label><input type="checkbox" [checked]="isSelected(data.iata, 'origin')"  (change)="elementUpdated($event, 'origin')" value={{data.iata}}/> {{ data.name }} </label>
+        <label><input type="checkbox" [checked]="optionSelected(data.iata, 'origin')"  (change)="elementUpdated($event, 'origin')" value={{data.iata}}/> {{ data.name }} </label>
       </div>
       <div class="col-md-4 col-sm-4 col-4">--</div>
     </div>
@@ -59,7 +59,7 @@
     </div>
     <div class="row" *ngFor="let data of destinationContent">
       <div class="col-md-8 col-sm-8 col-8">
-        <label><input type="checkbox" [checked]="isSelected(data.iata, 'destination')" (change)="elementUpdated($event, 'destination')"  value={{data.iata}} /> {{ data.name }} </label>
+        <label><input type="checkbox" [checked]="optionSelected(data.iata, 'destination')" (change)="elementUpdated($event, 'destination')"  value={{data.iata}} /> {{ data.name }} </label>
       </div>
       <div class="col-md-4 col-sm-4 col-4">--</div>
     </div>
