@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { configurations } from "../../configs/config";
-import { BestOfferService } from "..//../services/best-offer.service";
-import { BasicTrackerError } from "src/app/models/basicTrackError";
-import { IBestOffer } from "src/app/models/IBestOffer";
+import { Component, OnInit } from '@angular/core';
+import { configurations } from '../../configs/config';
+import { BestOfferService } from '..//../services/best-offer.service';
+import { BasicTrackerError } from 'src/app/models/basicTrackError';
+import { IBestOffer } from 'src/app/models/IBestOffer';
 @Component({
-  selector: "app-filter",
-  templateUrl: "./filter.component.html",
-  styleUrls: ["./filter.component.css"]
+  selector: 'app-filter',
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
-  error: string;
-  hideOrigin: boolean = true;
-  hideDestination: boolean = true;
-  hideDates: boolean = true;
-  hideLoading: boolean= true;
+  errorMessage: string;
+  hideOrigin = true;
+  hideDestination = true;
+  hideDates = true;
+  hideLoading = true;
 
   originContent = configurations.defaultOrigins;
   destinationContent = configurations.defaultDestination;
@@ -22,7 +22,7 @@ export class FilterComponent implements OnInit {
   selectedOrigins = new Map();
   selectedDestinations = new Map();
   selectedMonth: string;
-  sTimeout: any;
+  timeTrigger: any;
 
   bestOffersReturned: IBestOffer[];
   constructor(private bOService: BestOfferService) {}
@@ -46,25 +46,24 @@ export class FilterComponent implements OnInit {
     this.hideOrigin = true;
   }
 
-  onMonthChange( element ){
-    var selectedOption = element.srcElement.value;
+  onMonthChange( element ) {
     this.restartTimeout();
-    this.selectedMonth = selectedOption; 
+    this.selectedMonth = element.srcElement.value;
   }
 
-  elementUpdated(data, filterby) {
-    if (filterby === "origin") {
-      this.updateList(data, this.selectedOrigins);
+  elementUpdated(bestOffers: IBestOffer[], filterBy: string) {
+    if (filterBy === 'origin') {
+      this.updateList(bestOffers, this.selectedOrigins);
     }
-    if (filterby === "destination") {
-      this.updateList(data, this.selectedDestinations);
+    if (filterBy === 'destination') {
+      this.updateList(bestOffers, this.selectedDestinations);
     }
   }
 
-  updateList(data, listToUpdate) {
-    var shortName = data.srcElement.value;
+  updateList(element, listToUpdate) {
+    const shortName = element.srcElement.value;
 
-    if (data.target.checked === true) {
+    if (element.target.checked) {
       // add element
       listToUpdate.set(shortName, shortName);
     } else {
@@ -76,11 +75,20 @@ export class FilterComponent implements OnInit {
     return listToUpdate;
   }
 
-  updateAllElements(data, listToUpdate, source) {
-    if (data.checked) {
+  updateCompleteList(element: object, filterBy: string) {
+    if (filterBy === 'origin') {
+      this.updateAllElements(element, this.selectedOrigins, this.originContent);
+    }
+    if (filterBy === 'destination') {
+      this.updateAllElements(element, this.selectedDestinations, this.destinationContent);
+    }
+  }
+
+  updateAllElements(element, listToUpdate, source) {
+    if (element.checked) {
       listToUpdate.clear();
-      source.forEach(element => {
-        listToUpdate.set(element.iata, element.iata);
+      source.forEach(bestOffer => {
+        listToUpdate.set(bestOffer.iata, bestOffer.iata);
       });
     } else {
       listToUpdate.clear();
@@ -89,67 +97,49 @@ export class FilterComponent implements OnInit {
     this.restartTimeout();
   }
 
-  updateCompleteList(data, filterby) {
-    if (filterby === "origin") {
-      this.updateAllElements(data, this.selectedOrigins, this.originContent);
-    }
-    if (filterby === "destination") {
-      this.updateAllElements(
-        data,
-        this.selectedDestinations,
-        this.destinationContent
-      );
-    }
-  }
-
   restartTimeout() {
     // just to wait 1.8 second to call the service
-    if (this.sTimeout) {
-      clearTimeout(this.sTimeout);
+    if (this.timeTrigger) {
+      clearTimeout(this.timeTrigger);
     }
-    this.sTimeout = setTimeout(() => {
+    this.timeTrigger = setTimeout(() => {
       this.processRequest();
     }, 1800);
   }
 
-  isSelected(shortName, filterby) {
-    let valueToReturn = false;
+  isSelected(shortName: string, filterBy: string) {
+    let existElement = false;
 
-    if (filterby === "origin") {
-      let result = this.selectedOrigins.get(shortName);
-      if (result != undefined) {
-        valueToReturn = true;
+    if (filterBy === 'origin') {
+      if (this.selectedOrigins.get(shortName) ) {
+        existElement = true;
       }
-    } else if (filterby === "destination") {
-      let result = this.selectedDestinations.get(shortName);
-      if (result != undefined) {
-        valueToReturn = true;
+    } else if (filterBy === 'destination') {
+      if (this.selectedDestinations.get(shortName) ) {
+        existElement = true;
       }
     }
-    return valueToReturn;
+    return existElement;
   }
 
   processRequest() {
-    this.error="";
-    
+    this.errorMessage = '';
     this.hideLoading = false;
-    let originsFiltered = "";
-    let destinationsFiltered = "";
-    let monthProccessed="";
+    let [originsFiltered, destinationsFiltered, monthProccessed] = ['', '', ''];
 
     if (this.selectedOrigins) {
-      originsFiltered = Array.from(this.selectedOrigins.keys()).join(",");
+      originsFiltered = Array.from(this.selectedOrigins.keys()).join(',');
     }
     if (this.selectedDestinations) {
-      destinationsFiltered = Array.from(this.selectedDestinations.keys()).join(",");
+      destinationsFiltered = Array.from(this.selectedDestinations.keys()).join(',');
     }
 
-    if (this.selectedMonth){
-      var date= new Date();
-      var year = date.getFullYear();
-      var month = this.selectedMonth;
-      var day = date.getDate();
-      monthProccessed = year+'-'+month+'-'+ day;
+    if (this.selectedMonth) {
+      const date = new Date(),
+            year = date.getFullYear(),
+            month = this.selectedMonth,
+            day = date.getDate();
+      monthProccessed = year + '-' + month + '-' + day;
     }
 
     this.bOService
@@ -161,10 +151,10 @@ export class FilterComponent implements OnInit {
           this.hideLoading = true;
         },
         (error: BasicTrackerError) => {
-          this.error = error.friendlyMessage;
+          this.errorMessage = error.friendlyMessage;
           this.hideLoading = true;
         },
-        () => console.log(" All done getting best Offers")
+        () => console.log(' All done getting best Offers')
       );
   }
 }
