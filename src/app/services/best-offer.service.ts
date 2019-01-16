@@ -1,18 +1,18 @@
-import { Injectable } from "@angular/core";
-import { configurations } from "../configs/config";
-import { catchError } from "rxjs/operators";
-import { Observable, throwError } from "rxjs";
+import { Injectable } from '@angular/core';
+import { configurations } from '../configs/config';
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse
-} from "@angular/common/http";
-import { BasicTrackerError } from "../models/basicTrackError";
-import { IBestOffer } from "../models/IBestOffer";
+} from '@angular/common/http';
+import { BasicTrackerError } from '../models/basicTrackError';
+import { IBestOffer } from '../models/IBestOffer';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class BestOfferService {
   private baseAPIUrl = configurations.baseApiUrl;
@@ -30,7 +30,7 @@ export class BestOfferService {
       urlModified += `&destination=${destinations}`;
     }
 
-    if (date.length > 0){
+    if (date.length > 0) {
       urlModified += `&departureDateMin=${date}`;
     }
 
@@ -42,7 +42,7 @@ export class BestOfferService {
   private handleError(error: HttpErrorResponse): Observable<BasicTrackerError> {
     this.dataError.errorNumber = 100;
     this.dataError.message = error.statusText;
-    this.dataError.friendlyMessage = "An error ocurred retrieving data.";
+    this.dataError.friendlyMessage = 'An error ocurred retrieving data.';
     console.log (error.error);
     return throwError(this.dataError);
   }
